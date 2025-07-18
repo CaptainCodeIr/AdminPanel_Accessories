@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت فروشگاه اکسسوری</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        secondary: '#f59e0b',
+                        dark: '#1e293b',
+                        success: '#10b981',
+                        danger: '#ef4444',
+                        info: '#3b82f6'
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white text-gray-800 shadow-lg w-64 flex-shrink-0 flex-col hidden md:flex">
+            <div class="flex items-center justify-center p-4 border-b border-gray-200">
+                <div class="flex items-center">
+                    <i class="fas fa-gem text-2xl text-primary"></i>
+                    <span class="logo-text mr-2 text-xl font-bold">اکسسوری شاپ</span>
+                </div>
+            </div>
+
+            <div class="overflow-y-auto flex-grow">
+                <div class="p-4">
+                    <div class="text-xs uppercase text-gray-500 mb-2 font-bold sidebar-text">منوی اصلی</div>
+                    <a href="#" class="menu-item flex items-center p-2 text-primary bg-primary/10 rounded-lg mb-1">
+                        <i class="fas fa-tachometer-alt ml-2"></i>
+                        <span class="sidebar-text">داشبورد</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-boxes ml-2"></i>
+                        <span class="sidebar-text">محصولات</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-tags ml-2"></i>
+                        <span class="sidebar-text">دسته بندی‌ها</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-chart-line ml-2"></i>
+                        <span class="sidebar-text">آمار و گزارشات</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-percentage ml-2"></i>
+                        <span class="sidebar-text">تخفیف‌های ویژه</span>
+                    </a>
+                </div>
+
+                <div class="p-4 border-t border-gray-200">
+                    <div class="text-xs uppercase text-gray-500 mb-2 font-bold sidebar-text">مدیریت فروش</div>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-shopping-cart ml-2"></i>
+                        <span class="sidebar-text">سفارشات</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-truck ml-2"></i>
+                        <span class="sidebar-text">ارسال کالا</span>
+                    </a>
+                </div>
+
+                <div class="p-4 border-t border-gray-200">
+                    <div class="text-xs uppercase text-gray-500 mb-2 font-bold sidebar-text">تنظیمات</div>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-users ml-2"></i>
+                        <span class="sidebar-text">کاربران</span>
+                    </a>
+                    <a href="#" class="menu-item flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg mb-1">
+                        <i class="fas fa-cog ml-2"></i>
+                        <span class="sidebar-text">تنظیمات سیستم</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Profile"
+                        class="w-10 h-10 rounded-full">
+                    <div class="mr-2 sidebar-text">
+                        <div class="font-medium">مدیر سیستم</div>
+                        <div class="text-xs text-gray-500">سطح دسترسی: ادمین</div>
+                    </div>
+                    <button class="text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <div class="flex items-center">
+                        <button class="md:hidden text-gray-500 mr-2">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <h2 class="text-xl font-bold">داشبورد مدیریت</h2>
+                    </div>
+
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <button class="relative text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bell"></i>
+                            <span
+                                class="absolute -top-1 -right-1 w-4 h-4 bg-danger text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </button>
+                        <button class="relative text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-envelope"></i>
+                            <span
+                                class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-xs rounded-full flex items-center justify-center">5</span>
+                        </button>
+                        <div class="relative">
+                            <input type="text" placeholder="جستجو..."
+                                class="border border-gray-300 rounded-lg px-3 py-1 pr-8 w-40 md:w-64 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                            <i class="fas fa-search absolute left-3 top-2 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-4">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-gray-500 mb-1">مجموع فروش امروز</h3>
+                                <p class="text-2xl font-bold">۱۲۵,۴۰۰,۰۰۰ <span
+                                        class="text-sm text-success">تومان</span></p>
+                            </div>
+                            <div class="p-3 rounded-full bg-success/10 text-success">
+                                <i class="fas fa-chart-bar text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-success flex items-center">
+                            <i class="fas fa-arrow-up ml-1"></i>
+                            <span>۱۲.۵٪ افزایش نسبت به دیروز</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-gray-500 mb-1">سفارشات جدید</h3>
+                                <p class="text-2xl font-bold">۴۸</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-primary/10 text-primary">
+                                <i class="fas fa-shopping-cart text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-danger flex items-center">
+                            <i class="fas fa-arrow-down ml-1"></i>
+                            <span>۲.۳٪ کاهش نسبت به دیروز</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-gray-500 mb-1">بازدید امروز</h3>
+                                <p class="text-2xl font-bold">۳,۲۴۵</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-secondary/10 text-secondary">
+                                <i class="fas fa-eye text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-success flex items-center">
+                            <i class="fas fa-arrow-up ml-1"></i>
+                            <span>۲۱.۵٪ افزایش نسبت به دیروز</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-gray-500 mb-1">نرخ تبدیل</h3>
+                                <p class="text-2xl font-bold">۲.۴۳٪</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-info/10 text-info">
+                                <i class="fas fa-exchange-alt text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm text-success flex items-center">
+                            <i class="fas fa-arrow-up ml-1"></i>
+                            <span>۱.۲٪ افزایش نسبت به دیروز</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold">آمار فروش هفتگی</h3>
+                            <div>
+                                <select
+                                    class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                    <option>این هفته</option>
+                                    <option>هفته گذشته</option>
+                                    <option>این ماه</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold">آمار بازدید</h3>
+                            <div>
+                                <select
+                                    class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                    <option>این هفته</option>
+                                    <option>هفته گذشته</option>
+                                    <option>این ماه</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trafficChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Products -->
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-4 space-x-reverse">
+                            <button
+                                class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded-lg text-sm flex items-center">
+                                <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                                <span>بازگشت</span>
+                            </button>
+                            <h3 class="font-bold">محصولات اخیر</h3>
+                        </div>
+                        <button onclick="showProductForm()"
+                            class="bg-primary hover:bg-primary/90 text-white px-3 py-1 rounded-lg text-sm flex items-center">
+                            <i class="fas fa-plus ml-1 text-xs"></i>
+                            <span>محصول جدید</span>
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        محصول</th>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        دسته بندی</th>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        قیمت</th>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        تعداد فروش</th>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        وضعیت</th>
+                                    <th
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded"
+                                                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
+                                                    alt="محصول">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">ساعت مچی مردانه</div>
+                                                <div class="text-sm text-gray-500">مدل جدید ۲۰۲۳</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">ساعت</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">۲,۴۹۰,۰۰۰ تومان
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">۴۷
+                                            عدد</span>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-success mr-2"></div>
+                                            <span>موجود</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-primary hover:text-primary/80 mr-2"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="text-danger hover:text-danger/80"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded"
+                                                    src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
+                                                    alt="محصول">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">عینک آفتابی زنانه
+                                                </div>
+                                                <div class="text-sm text-gray-500">مدل کت واک</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">عینک آفتابی</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">۱,۲۹۰,۰۰۰ تومان
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">۳۲
+                                            عدد</span>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-danger mr-2"></div>
+                                            <span>نا موجود</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-primary hover:text-primary/80 mr-2"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="text-danger hover:text-danger/80"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded"
+                                                    src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
+                                                    alt="محصول">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">دستبند نقره زنانه
+                                                </div>
+                                                <div class="text-sm text-gray-500">دست ساز</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">زیورآلات</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">۸۹۰,۰۰۰ تومان</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">۵۶
+                                            عدد</span>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-success mr-2"></div>
+                                            <span>موجود</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-primary hover:text-primary/80 mr-2"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="text-danger hover:text-danger/80"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <img class="h-10 w-10 rounded"
+                                                    src="https://images.unsplash.com/photo-1572635196234-14e3d939b06e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
+                                                    alt="محصول">
+                                            </div>
+                                            <div class="mr-4">
+                                                <div class="text-sm font-medium text-gray-900">عینک آفتابی مردانه
+                                                </div>
+                                                <div class="text-sm text-gray-500">مدل شیبوری</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">عینک آفتابی</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">۱,۵۹۰,۰۰۰ تومان
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success/10 text-success">۲۸
+                                            عدد</span>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <div class="h-2.5 w-2.5 rounded-full bg-warning mr-2"></div>
+                                            <span>محدود</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-primary hover:text-primary/80 mr-2"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="text-danger hover:text-danger/80"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-4 mt-4">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="#"
+                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                قبلی
+                            </a>
+                            <a href="#"
+                                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                بعدی
+                            </a>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    نمایش
+                                    <span class="font-medium">۱</span>
+                                    تا
+                                    <span class="font-medium">۴</span>
+                                    از
+                                    <span class="font-medium">۱۲۴</span>
+                                    نتیجه
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                                    aria-label="Pagination">
+                                    <a href="#"
+                                        class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">قبلی</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <a href="#" aria-current="page"
+                                        class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        ۱
+                                    </a>
+                                    <a href="#"
+                                        class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        ۲
+                                    </a>
+                                    <a href="#"
+                                        class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        ۳
+                                    </a>
+                                    <a href="#"
+                                        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">بعدی</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Categories -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-primary text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">زیورآلات</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-ring text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۳۴ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button class="w-full bg-primary/5 hover:bg-primary/10 text-primary py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-secondary text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">ساعت</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-clock text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۲۸ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button
+                                class="w-full bg-secondary/5 hover:bg-secondary/10 text-secondary py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-success text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">ساعت هوشمند</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-clock text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۱۸ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button class="w-full bg-success/5 hover:bg-success/10 text-success py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-danger text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">لوازم جانبی موبایل</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-mobile-alt text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۴۵ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button class="w-full bg-danger/5 hover:bg-danger/10 text-danger py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-info text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">عینک آفتابی</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-glasses text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۱۹ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button class="w-full bg-info/5 hover:bg-info/10 text-info py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-warning text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">لوازم دیجیتالی</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-laptop text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۲۲ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button class="w-full bg-warning/5 hover:bg-warning/10 text-warning py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-purple-500 text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">لوازم خانگی</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-home text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۱۵ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button
+                                class="w-full bg-purple-500/5 hover:bg-purple-500/10 text-purple-500 py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-pink-500 text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">ادکلن و اسپری</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-spray-can text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۲۷ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button
+                                class="w-full bg-pink-500/5 hover:bg-pink-500/10 text-pink-500 py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="p-4 bg-indigo-500 text-white">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold">لوازم آرایشی و بهداشتی</h3>
+                                <div class="p-2 rounded-full bg-white/20">
+                                    <i class="fas fa-pump-soap text-lg"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-1">۳۸ محصول فعال</p>
+                        </div>
+                        <div class="p-4">
+                            <button
+                                class="w-full bg-indigo-500/5 hover:bg-indigo-500/10 text-indigo-500 py-2 rounded-lg">مدیریت
+                                محصولات</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Product Creation Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center border-b pb-4 mb-4">
+                    <h3 class="text-xl font-bold">افزودن محصول جدید</h3>
+                    <button onclick="hideProductForm()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form id="productForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">نام محصول</label>
+                            <input type="text" required
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">دسته بندی</label>
+                            <select required
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                <option value="">انتخاب کنید</option>
+                                <option value="زیورآلات">زیورآلات</option>
+                                <option value="ساعت">ساعت</option>
+                                <option value="ساعت هوشمند">ساعت هوشمند</option>
+                                <option value="لوازم جانبی موبایل">لوازم جانبی موبایل</option>
+                                <option value="عینک آفتابی">عینک آفتابی</option>
+                                <option value="لوازم دیجیتالی">لوازم دیجیتالی</option>
+                                <option value="لوازم خانگی">لوازم خانگی</option>
+                                <option value="ادکلن و اسپری">ادکلن و اسپری</option>
+                                <option value="لوازم آرایشی و بهداشتی">لوازم آرایشی و بهداشتی</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">توضیحات محصول</label>
+                        <textarea rows="3"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">قیمت (تومان)</label>
+                            <input type="number" required
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">تعداد موجودی</label>
+                            <input type="number" required
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                        </div>
+
+                        <div>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="form-checkbox text-primary rounded">
+                                <span class="mr-2 text-sm text-gray-700">دارای تخفیف</span>
+                            </label>
+                            <div id="discountField" class="mt-2 hidden">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">درصد تخفیف</label>
+                                <input type="number" min="1" max="100"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">تصاویر محصول</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                            <div class="flex flex-wrap gap-2 mb-4" id="imagePreviews"></div>
+                            <input type="file" id="productImages" multiple accept="image/*" class="hidden">
+                            <button type="button" onclick="document.getElementById('productImages').click()"
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">
+                                <i class="fas fa-upload ml-1"></i>
+                                آپلود تصاویر
+                            </button>
+                            <p class="text-xs text-gray-500 mt-2">حداکثر 5 تصویر (JPG, PNG)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-4 space-x-reverse pt-4">
+                        <button type="button" onclick="hideProductForm()"
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                            انصراف
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg">
+                            ایجاد محصول
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
